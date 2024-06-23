@@ -24,7 +24,7 @@ def recreate_metadata(image_path):
     # Create the new filename with a prefix
     new_filename = f"no_metadata_{name}{extension}"
     new_path = os.path.join(scripts.basedir(), 'outputs', 'no-metadata-images', new_filename)
-    tmp_path = os.path.join(image_path,new_filename)
+    tmp_path = os.path.join(directory, new_filename)
 
     # Create a temp file to save the image without metadata
     g = image.save(tmp_path, optimize=True, quality=100)
