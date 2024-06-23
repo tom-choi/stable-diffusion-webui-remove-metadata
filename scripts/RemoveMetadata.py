@@ -37,6 +37,7 @@ def on_ui_tabs():
                 btn = gr.Button("Recreate Image with Metadata Removed")
             with gr.Column():
                 output_image = gr.Image(label="Output Image")
+            btn.click(recreate_metadata, inputs=input_image, outputs=output_image)
 
         return [(ui_component, "Remove Metadata", "extension_example_tab")]
     # Create the Gradio UI
