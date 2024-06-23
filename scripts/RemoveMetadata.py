@@ -37,7 +37,7 @@ def recreate_metadata(image_path):
     print(f"Metadata removed from {image_path}")
     print(f"New file saved as: {new_path}")
     
-    return tmp_path
+    return new_path
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as ui_component:
@@ -47,6 +47,7 @@ def on_ui_tabs():
                 btn = gr.Button("Recreate Image with Metadata Removed")
             with gr.Column():
                 output_image = gr.Gallery(label="Output Image", type="filepath")
+        Path(scripts.basedir(), 'outputs', 'no-metadata-images').mkdir(parents=True, exist_ok=True)
         btn.click(recreate_metadata, inputs=input_image, outputs=output_image)
 
         # ui_component.launch()
