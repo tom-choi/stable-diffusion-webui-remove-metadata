@@ -1,9 +1,35 @@
 import modules.scripts as scripts
 import gradio as gr
 import os
+from PIL import Image
+from PIL.ExifTags import TAGS
 
 from modules import script_callbacks
 
+def remove_metadata(image_path):
+    """
+    Removes the metadata from an image file and saves a new file with a prefix.
+    
+    Args:
+        image_path (str): The path to the image file.
+    """
+    image = Image.open(image_path)
+    
+    # Get the directory and filename
+    directory, filename = os.path.split(image_path)
+    name, extension = os.path.splitext(filename)
+    
+    # Create the new filename with a prefix
+    new_filename = f"no_metadata_{name}{extension}"
+    new_path = os.path.join(directory, new_filename)
+    
+    # Remove the EXIF data and save the new file
+    image.save(new_path, optimize=True, quality=100)
+
+    print(f"Metadata removed from {image_path}")
+    print(f"New file saved as: {new_path}")
+    
+    return new_path
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as ui_component:
@@ -13,30 +39,56 @@ def on_ui_tabs():
                 label="Show image"
             )
             btn = gr.Button(
-                "Dummy image"
+                "Remove Metadata"
             ).style(
                 full_width=False
             )
         with gr.Row():
+            file_input = gr.File(
+                label="Select an image"
+            )
             gallery = gr.Gallery(
                 label="Dummy Image",
                 show_label=False,
             )
 
         btn.click(
-            dummy_images,
-            inputs = [checkbox],
+            remove_metadata,
+            inputs = [file_input],
             outputs = [gallery],
         )
 
         return [(ui_component, "Extension Example", "extension_example_tab")]
 
-def dummy_images(checkbox):
-    if (checkbox):
-        return [
-            "https://chichi-pui.imgix.net/uploads/post_images/eee3b614-f126-4045-b53d-8bf38b98841d/05aba7f3-208b-4912-92f3-32d1bfc2edc3_1200x.jpeg?auto=format&lossless=0"
-        ]
-    else:
-        return []
-
 script_callbacks.on_ui_tabs(on_ui_tabs)
+
+
+# from PIL import Image
+# from PIL.ExifTags import TAGS
+# import os
+
+# def remove_metadata(image_path):
+#     """
+#     Removes the metadata from an image file and saves a new file with a prefix.
+    
+#     Args:
+#         image_path (str): The path to the image file.
+#     """
+#     image = Image.open(image_path)
+    
+#     # Get the directory and filename
+#     directory, filename = os.path.split(image_path)
+#     name, extension = os.path.splitext(filename)
+    
+#     # Create the new filename with a prefix
+#     new_filename = f"no_metadata_{name}{extension}"
+#     new_path = os.path.join(directory, new_filename)
+    
+#     # Remove the EXIF data and save the new file
+#     image.save(new_path, optimize=True, quality=100)
+
+#     print(f"Metadata removed from {image_path}")
+#     print(f"New file saved as: {new_path}")
+
+# # Usage example
+# remove_metadata("G:\github\\novelai\\novelai-webui-10-9update\outputs\extras-images\\00082.png")
