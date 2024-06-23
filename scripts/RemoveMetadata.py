@@ -41,15 +41,15 @@ def on_ui_tabs():
             file_input = gr.File(
                 label="Select an image"
             )
+            gallery = gr.Gallery(
+                label="Image",
+                show_label=False,
+            )
+        with gr.Row():
             btn = gr.Button(
                 "Remove Metadata"
             ).style(
                 full_width=False
-            )
-        with gr.Row():
-            gallery = gr.Gallery(
-                label="Image",
-                show_label=False,
             )
 
         btn.click(
