@@ -1,5 +1,7 @@
 # stable-diffusion-webui-remove-metadata
 
+![alt text](image.png)
+
 Easy extension for removing images metadata.
 
 ## How to use
