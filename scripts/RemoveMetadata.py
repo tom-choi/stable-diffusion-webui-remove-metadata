@@ -24,6 +24,10 @@ def recreate_metadata(image_path):
     # Create the new filename with a prefix
     new_filename = f"no_metadata_{name}{extension}"
     new_path = os.path.join(scripts.basedir(), 'outputs', 'no-metadata-images', new_filename)
+    tmp_path = os.path.join(image_path,new_filename)
+
+    # Create a temp file to save the image without metadata
+    g = image.save(tmp_path, optimize=True, quality=100)
     
     # Remove the EXIF data and save the new file
     image.save(new_path, optimize=True, quality=100)
@@ -31,7 +35,7 @@ def recreate_metadata(image_path):
     print(f"Metadata removed from {image_path}")
     print(f"New file saved as: {new_path}")
     
-    return new_path
+    return tmp_path
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as ui_component:
