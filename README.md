@@ -1,6 +1,6 @@
 # stable-diffusion-webui-remove-metadata
 
-This is a simple extension for stable-diffusion-webui.
+Easy extension for removing images metadata.
 
 ## How to use
 
@@ -17,3 +17,9 @@ This is a simple extension for stable-diffusion-webui.
     ... (if extension need module division)
 ```
 
+## Features
+
+- Remove metadata from images.
+- Support for multiple image formats.
+- Support for multiple image sources.
+- Support for multiple image outputs.
