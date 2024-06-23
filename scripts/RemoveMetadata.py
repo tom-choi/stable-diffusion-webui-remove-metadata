@@ -23,7 +23,7 @@ def recreate_metadata(image_path):
     
     # Create the new filename with a prefix
     new_filename = f"no_metadata_{name}{extension}"
-    new_path = os.path.join(scripts.basedir(), new_filename)
+    new_path = os.path.join(scripts.basedir(), 'outputs', 'no-metadata-images', new_filename)
     
     # Remove the EXIF data and save the new file
     image.save(new_path, optimize=True, quality=100)
