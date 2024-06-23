@@ -15,7 +15,6 @@ def recreate_metadata(image_path):
     Args:
         image_path (str): The path to the image file.
     """
-    print(image_path)
     image = Image.open(image_path)
     
     # Get the directory and filename
@@ -47,7 +46,6 @@ def on_ui_tabs():
                 btn = gr.Button("Recreate Image with Metadata Removed")
             with gr.Column():
                 output_image = gr.Gallery(label="Output Image", type="filepath")
-        Path(scripts.basedir(), 'outputs', 'no-metadata-images').mkdir(parents=True, exist_ok=True)
         btn.click(recreate_metadata, inputs=input_image, outputs=output_image)
 
         # ui_component.launch()
