@@ -23,6 +23,9 @@ def recreate_metadata(image_path):
     
     # Create the new filename with a prefix
     new_filename = f"no_metadata_{name}{extension}"
+    if not os.path.exists(os.path.join(scripts.basedir(), 'outputs', 'no-metadata-images')):
+        # Create the directory
+        os.makedirs(os.path.join(scripts.basedir(), 'outputs', 'no-metadata-images'))
     new_path = os.path.join(scripts.basedir(), 'outputs', 'no-metadata-images', new_filename)
     tmp_path = os.path.join(directory, new_filename)
 
