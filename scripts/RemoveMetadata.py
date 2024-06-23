@@ -6,62 +6,48 @@ from PIL.ExifTags import TAGS
 
 from modules import script_callbacks
 
-def remove_metadata(files):
+def recreate_metadata(input_image):
     """
-    Removes the metadata from an image file and saves a new file with a prefix.
+    This function takes an input image, removes its metadata, and saves a new image with the metadata removed.
     
-    Args:
-        file (Gradio.File): The image file object.
+    Parameters:
+    input_image (PIL.Image.Image): The input image to be processed.
+    
+    Returns:
+    PIL.Image.Image: The new image with the metadata removed.
     """
-    out = []
-    for file in files:
-        # Open the image from the Gradio File object
-        image = Image.open(file)
-            
-        # Get the directory and filename
-        directory, filename = os.path.split(file.name)
-        name, extension = os.path.splitext(filename)
-            
-        # Create the new filename with a prefix
-        new_filename = f"no_metadata_{name}{extension}"
-        new_path = os.path.join(directory, new_filename)
-            
-        # Remove the EXIF data and save the new file
-        image.save(new_path, optimize=True, quality=100, exif=None)
-
-        print(f"Metadata removed from {file.name}")
-        print(f"New file saved as: {new_path}")
-        
-        # Add the new file to the output list
-        out.append(gr.update(file_obj=file, visible=True))
-
-    return out[0]
+    # Load the input image
+    img = Image.open(input_image)
+    
+    # Remove the metadata
+    img_no_metadata = Image.new(img.mode, img.size)
+    img_no_metadata.putdata(list(img.getdata()))
+    
+    # Save the new image with the metadata removed
+    new_filename = os.path.splitext(os.path.basename(input_image))[0] + "_no_metadata.png"
+    img_no_metadata.save(new_filename)
+    
+    return img_no_metadata
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as ui_component:
         with gr.Row():
-            file_input = gr.Files(
-                label="Select an image", 
-                visible=True
-            )
-            gallery = gr.Gallery(
-                label="Image",
-                show_label=False,
-                visible=True
-            )
-        with gr.Row():
-            btn = gr.Button(
-                "Remove Metadata"
-            ).style(
-                full_width=False
-            )
-
-        btn.click(
-            remove_metadata,
-            inputs = [file_input],
-            outputs = [gallery],
-        )
+            with gr.Column():
+                input_image = gr.Image(label="Input Image")
+                btn = gr.Button("Recreate Image with Metadata Removed")
+            with gr.Column():
+                output_image = gr.Image(label="Output Image")
 
         return [(ui_component, "Remove Metadata", "extension_example_tab")]
+    # Create the Gradio UI
+    # with gr.Blocks() as demo:
+    #     with gr.Row():
+    #         with gr.Column():
+    #             input_image = gr.Image(label="Input Image")
+    #             btn = gr.Button("Recreate Image with Metadata Removed")
+    #         with gr.Column():
+    #             output_image = gr.Image(label="Output Image")
+        
+    #     btn.click(recreate_metadata, inputs=input_image, outputs=output_image)
 
 script_callbacks.on_ui_tabs(on_ui_tabs)
