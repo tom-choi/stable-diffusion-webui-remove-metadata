@@ -1,6 +1,11 @@
-# stable-diffusion-webui-extension-templates
+# stable-diffusion-webui-remove-metadata
 
-a template of stable-diffusion-webui extension for understand and develop  quickly 
+This is a simple extension for stable-diffusion-webui.
+
+## How to use
+
+1. Clone this repo to `extensions` folder.
+2. Restart webui.
 
 ## basic design
 ```
