@@ -6,41 +6,48 @@ from PIL.ExifTags import TAGS
 
 from modules import script_callbacks
 
-def remove_metadata(file):
+def remove_metadata(files):
     """
     Removes the metadata from an image file and saves a new file with a prefix.
     
     Args:
         file (Gradio.File): The image file object.
     """
-    # Open the image from the Gradio File object
-    image = Image.open(file)
-        
-    # Get the directory and filename
-    directory, filename = os.path.split(file.name)
-    name, extension = os.path.splitext(filename)
-        
-    # Create the new filename with a prefix
-    new_filename = f"no_metadata_{name}{extension}"
-    new_path = os.path.join(directory, new_filename)
-        
-    # Remove the EXIF data and save the new file
-    image.save(new_path, optimize=True, quality=100, exif=None)
+    out = []
+    for file in files:
+        # Open the image from the Gradio File object
+        image = Image.open(file)
+            
+        # Get the directory and filename
+        directory, filename = os.path.split(file.name)
+        name, extension = os.path.splitext(filename)
+            
+        # Create the new filename with a prefix
+        new_filename = f"no_metadata_{name}{extension}"
+        new_path = os.path.join(directory, new_filename)
+            
+        # Remove the EXIF data and save the new file
+        image.save(new_path, optimize=True, quality=100, exif=None)
 
-    print(f"Metadata removed from {file.name}")
-    print(f"New file saved as: {new_path}")
-    
-    return Image.open(new_path)
+        print(f"Metadata removed from {file.name}")
+        print(f"New file saved as: {new_path}")
+        
+        # Add the new file to the output list
+        out.append(gr.update(file_obj=file, visible=True))
+
+    return out[0]
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as ui_component:
         with gr.Row():
-            file_input = gr.File(
-                label="Select an image"
+            file_input = gr.Files(
+                label="Select an image", 
+                visible=True
             )
             gallery = gr.Gallery(
                 label="Image",
                 show_label=False,
+                visible=True
             )
         with gr.Row():
             btn = gr.Button(
