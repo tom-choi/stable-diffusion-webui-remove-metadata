@@ -10,7 +10,7 @@ from modules.shared import opts, cmd_opts, state
 class ExtensionTemplateScript(scripts.Script):
         # Extension title in menu UI
         def title(self):
-                return "Extension Template"
+                return "Remove Metadata"
 
         # Decide to show menu in txt2img or img2img
         # - in "txt2img" -> is_img2img is `False`
@@ -22,7 +22,7 @@ class ExtensionTemplateScript(scripts.Script):
 
         # Setup menu ui detail
         def ui(self, is_img2img):
-                with gr.Accordion('Extension Template', open=False):
+                with gr.Accordion('Remove Metadata', open=False):
                         with gr.Row():
                                 angle = gr.Slider(
                                         minimum=0.0,

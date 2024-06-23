@@ -6,7 +6,7 @@ This is a simple extension for stable-diffusion-webui.
 
 
 1. Clone this repo to `extensions` folder.
-   - `tom-choi/stable-diffusion-webui-remove-metadata`
+   - `https://github.com/tom-choi/stable-diffusion-webui-remove-metadata`
 2. Restart webui.
 
 ## basic design
@@ -16,3 +16,4 @@ This is a simple extension for stable-diffusion-webui.
     ├── ${extension_name}.py
     ... (if extension need module division)
 ```
+
