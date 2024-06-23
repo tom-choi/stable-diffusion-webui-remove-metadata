@@ -28,12 +28,12 @@ def remove_metadata(file):
         new_path = os.path.join(directory, new_filename)
         
         # Remove the EXIF data and save the new file
-        image.save(new_path, optimize=True, quality=100)
+        new_image = image.save(new_path, optimize=True, quality=100)
 
     print(f"Metadata removed from {temp_file.name}")
     print(f"New file saved as: {new_path}")
     
-    return new_path
+    return new_image
 
 def on_ui_tabs():
     with gr.Blocks(analytics_enabled=False) as ui_component:
