@@ -1,5 +1,7 @@
 # stable-diffusion-webui-remove-metadata
 
+https://www.tomciheng.com/article/stable-diffusion
+
 # Metadata 文件移除工具
 
 ![alt text](image.png)
