@@ -40,7 +40,7 @@ with gr.Blocks(analytics_enabled=False) as ui_component:
             input_image = gr.Image(label="Input Image", type="filepath")
             btn = gr.Button("Recreate Image with Metadata Removed")
         with gr.Column():
-            output_image = gr.Gallery(label="Output Image", type="filepath")
+            output_image = gr.Image(label="Please Ingore Here, place your image in left hand side, 這裡留空，請將您的圖片放在左側，將來會用來顯示結果", type="filepath")
     
         btn.click(recreate_metadata, inputs=input_image, outputs=input_image)
 
